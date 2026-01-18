@@ -1,41 +1,58 @@
-import { useState } from 'react';
 import Icon from '@/components/ui/icon';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Separator } from '@/components/ui/separator';
+import { Badge } from '@/components/ui/badge';
 
 const Index = () => {
-  const [selectedBrand, setSelectedBrand] = useState('');
-  const [selectedModel, setSelectedModel] = useState('');
-  const [selectedYear, setSelectedYear] = useState('');
-  const [compatibilityResult, setCompatibilityResult] = useState<string | null>(null);
-
-  const categories = [
-    { name: 'Моторные масла', icon: 'Droplet', items: 342 },
-    { name: 'Фильтры', icon: 'Filter', items: 567 },
-    { name: 'Тормозная система', icon: 'Disc', items: 234 },
-    { name: 'Подвеска', icon: 'Wind', items: 189 },
-    { name: 'Электрика', icon: 'Zap', items: 421 },
-    { name: 'Трансмиссия', icon: 'Settings', items: 156 },
-  ];
-
-  const brands = ['BMW', 'Mercedes-Benz', 'Audi', 'Volkswagen', 'Toyota', 'Honda'];
-  const models: Record<string, string[]> = {
-    'BMW': ['3 Series', '5 Series', 'X5', 'X3'],
-    'Mercedes-Benz': ['C-Class', 'E-Class', 'GLC', 'GLE'],
-    'Audi': ['A4', 'A6', 'Q5', 'Q7'],
-  };
-
-  const handleCheckCompatibility = () => {
-    if (selectedBrand && selectedModel && selectedYear) {
-      setCompatibilityResult(`✓ Найдено 47 совместимых запчастей для ${selectedBrand} ${selectedModel} ${selectedYear} года`);
-    } else {
-      setCompatibilityResult('Заполните все поля для проверки');
+  const antifreezeProducts = [
+    {
+      name: 'BMW Coolant G11',
+      type: 'G11 (зелёный)',
+      price: '890 ₽',
+      volume: '1.5 л',
+      temp: '-40°C',
+      recommended: true
+    },
+    {
+      name: 'BMW Coolant G12+',
+      type: 'G12+ (красный)',
+      price: '1 250 ₽',
+      volume: '1.5 л',
+      temp: '-45°C',
+      recommended: true
+    },
+    {
+      name: 'BMW Long Life Coolant',
+      type: 'G12++ (синий)',
+      price: '1 490 ₽',
+      volume: '1.5 л',
+      temp: '-50°C',
+      recommended: true
+    },
+    {
+      name: 'Castrol Radicool SF',
+      type: 'G11/G12 универсальный',
+      price: '750 ₽',
+      volume: '1 л',
+      temp: '-40°C',
+      recommended: false
+    },
+    {
+      name: 'Liqui Moly Kuhlerfrostschutz',
+      type: 'G12++ (синий)',
+      price: '1 120 ₽',
+      volume: '1 л',
+      temp: '-45°C',
+      recommended: false
+    },
+    {
+      name: 'Motul Inugel Expert',
+      type: 'G12+ (красный)',
+      price: '980 ₽',
+      volume: '1 л',
+      temp: '-37°C',
+      recommended: false
     }
-  };
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -43,279 +60,156 @@ const Index = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <Icon name="Wrench" size={28} className="text-primary" />
-              <h1 className="text-2xl font-bold text-primary">AutoParts Pro</h1>
+              <Icon name="Droplet" size={28} className="text-accent" />
+              <h1 className="text-2xl font-bold text-primary">Антифриз для BMW</h1>
             </div>
-            <nav className="hidden md:flex gap-8">
-              <a href="#catalog" className="text-foreground hover:text-accent transition-colors font-medium">
-                Каталог
-              </a>
-              <a href="#compatibility" className="text-foreground hover:text-accent transition-colors font-medium">
-                Подбор запчастей
-              </a>
-              <a href="#contacts" className="text-foreground hover:text-accent transition-colors font-medium">
-                Контакты
-              </a>
-            </nav>
-            <Button variant="outline" size="sm">
-              <Icon name="Phone" size={16} className="mr-2" />
+            <div className="text-sm text-muted-foreground">
+              <Icon name="Phone" size={16} className="inline mr-2" />
               +7 (495) 123-45-67
-            </Button>
+            </div>
           </div>
         </div>
       </header>
 
-      <section className="bg-gradient-to-b from-secondary to-background py-20">
+      <section className="py-12 bg-secondary">
         <div className="container mx-auto px-6">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
+          <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-4xl font-bold text-primary mb-4">
-                Оригинальные запчасти для вашего автомобиля
+              <h2 className="text-3xl font-bold text-primary mb-4">
+                Система охлаждения BMW
               </h2>
-              <p className="text-muted-foreground text-base mb-6 leading-relaxed">
-                Профессиональный поставщик автозапчастей и расходных материалов. 
-                Гарантия качества, быстрая доставка, техническая поддержка.
+              <p className="text-muted-foreground mb-6 leading-relaxed">
+                Система охлаждения BMW состоит из радиатора, расширительного бачка, 
+                водяного насоса, термостата и патрубков. Для оптимальной работы 
+                требуется качественный антифриз, соответствующий спецификациям производителя.
               </p>
-              <div className="flex gap-4">
-                <Button size="lg" className="bg-accent hover:bg-accent/90">
-                  <Icon name="Search" size={18} className="mr-2" />
-                  Подобрать запчасти
-                </Button>
-                <Button size="lg" variant="outline">
-                  <Icon name="Download" size={18} className="mr-2" />
-                  Скачать каталог
-                </Button>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <Icon name="CheckCircle" size={20} className="text-accent" />
+                  <span className="text-sm">Объём системы: 8-12 литров в зависимости от модели</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icon name="CheckCircle" size={20} className="text-accent" />
+                  <span className="text-sm">Замена антифриза: каждые 2-3 года или 60 000 км</span>
+                </div>
+                <div className="flex items-center gap-3">
+                  <Icon name="CheckCircle" size={20} className="text-accent" />
+                  <span className="text-sm">Рабочая температура: 80-105°C</span>
+                </div>
               </div>
             </div>
-            <div className="relative">
+            <div>
               <img
-                src="https://cdn.poehali.dev/projects/107ede2b-1974-4262-96c5-c6170dcff8c4/files/4eb91654-f617-4ccd-9858-4418db45c614.jpg"
-                alt="Автозапчасти"
-                className="rounded-lg shadow-xl w-full object-cover"
+                src="https://cdn.poehali.dev/projects/107ede2b-1974-4262-96c5-c6170dcff8c4/files/ccf4db90-7217-4d05-8957-05871b240236.jpg"
+                alt="Система охлаждения BMW"
+                className="rounded-lg shadow-xl w-full"
               />
             </div>
           </div>
         </div>
       </section>
 
-      <section id="catalog" className="py-16 bg-white">
+      <section className="py-12 bg-white">
         <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-primary mb-3">Каталог запчастей</h3>
-            <p className="text-muted-foreground">Выберите категорию для поиска нужных деталей</p>
+          <div className="text-center mb-10">
+            <h3 className="text-3xl font-bold text-primary mb-3">Каталог антифриза для BMW</h3>
+            <p className="text-muted-foreground">Оригинальные и совместимые охлаждающие жидкости</p>
           </div>
+
           <div className="grid md:grid-cols-3 gap-6">
-            {categories.map((category) => (
-              <Card key={category.name} className="hover:shadow-lg transition-shadow cursor-pointer border-border">
+            {antifreezeProducts.map((product) => (
+              <Card key={product.name} className="border-border hover:shadow-lg transition-shadow">
                 <CardHeader>
-                  <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-accent/10 rounded flex items-center justify-center">
-                      <Icon name={category.icon as any} size={24} className="text-accent" />
+                  <div className="flex justify-between items-start mb-2">
+                    <CardTitle className="text-lg">{product.name}</CardTitle>
+                    {product.recommended && (
+                      <Badge variant="default" className="bg-accent">
+                        Рекомендуем
+                      </Badge>
+                    )}
+                  </div>
+                  <p className="text-sm text-muted-foreground">{product.type}</p>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-3">
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Объём:</span>
+                      <span className="font-medium">{product.volume}</span>
                     </div>
-                    <div>
-                      <CardTitle className="text-lg">{category.name}</CardTitle>
-                      <p className="text-sm text-muted-foreground">{category.items} товаров</p>
+                    <div className="flex justify-between text-sm">
+                      <span className="text-muted-foreground">Защита до:</span>
+                      <span className="font-medium">{product.temp}</span>
+                    </div>
+                    <div className="pt-3 border-t border-border">
+                      <div className="flex justify-between items-center">
+                        <span className="text-2xl font-bold text-primary">{product.price}</span>
+                        <Icon name="ShoppingCart" size={20} className="text-accent cursor-pointer hover:scale-110 transition-transform" />
+                      </div>
                     </div>
                   </div>
-                </CardHeader>
+                </CardContent>
               </Card>
             ))}
           </div>
         </div>
       </section>
 
-      <section id="compatibility" className="py-16 bg-secondary">
+      <section className="py-12 bg-secondary">
         <div className="container mx-auto px-6">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <h3 className="text-3xl font-bold text-primary mb-3">Проверка совместимости</h3>
-              <p className="text-muted-foreground">Укажите параметры вашего автомобиля для подбора совместимых запчастей</p>
-            </div>
-            
-            <Card className="border-border">
-              <CardContent className="p-8">
-                <div className="grid md:grid-cols-3 gap-6 mb-6">
-                  <div>
-                    <Label htmlFor="brand" className="mb-2 block font-medium">Марка автомобиля</Label>
-                    <Select value={selectedBrand} onValueChange={setSelectedBrand}>
-                      <SelectTrigger id="brand">
-                        <SelectValue placeholder="Выберите марку" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {brands.map((brand) => (
-                          <SelectItem key={brand} value={brand}>
-                            {brand}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="model" className="mb-2 block font-medium">Модель</Label>
-                    <Select 
-                      value={selectedModel} 
-                      onValueChange={setSelectedModel}
-                      disabled={!selectedBrand}
-                    >
-                      <SelectTrigger id="model">
-                        <SelectValue placeholder="Выберите модель" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {selectedBrand && models[selectedBrand]?.map((model) => (
-                          <SelectItem key={model} value={model}>
-                            {model}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div>
-                    <Label htmlFor="year" className="mb-2 block font-medium">Год выпуска</Label>
-                    <Input
-                      id="year"
-                      type="number"
-                      placeholder="2020"
-                      value={selectedYear}
-                      onChange={(e) => setSelectedYear(e.target.value)}
-                      min="1990"
-                      max="2026"
-                    />
-                  </div>
-                </div>
-
-                <Button 
-                  onClick={handleCheckCompatibility} 
-                  className="w-full bg-accent hover:bg-accent/90"
-                  size="lg"
-                >
-                  <Icon name="CheckCircle" size={18} className="mr-2" />
-                  Проверить совместимость
-                </Button>
-
-                {compatibilityResult && (
-                  <div className={`mt-6 p-4 rounded-md ${compatibilityResult.includes('✓') ? 'bg-green-50 border border-green-200' : 'bg-yellow-50 border border-yellow-200'}`}>
-                    <p className={`font-medium ${compatibilityResult.includes('✓') ? 'text-green-800' : 'text-yellow-800'}`}>
-                      {compatibilityResult}
-                    </p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-
-            <div className="mt-8 grid md:grid-cols-3 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Icon name="Shield" size={28} className="text-accent" />
-                </div>
-                <h4 className="font-bold text-primary mb-2">Гарантия качества</h4>
-                <p className="text-sm text-muted-foreground">Только оригинальные запчасти от проверенных производителей</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Icon name="Truck" size={28} className="text-accent" />
-                </div>
-                <h4 className="font-bold text-primary mb-2">Быстрая доставка</h4>
-                <p className="text-sm text-muted-foreground">Доставка по Москве в день заказа, по России 2-5 дней</p>
-              </div>
-              <div className="text-center">
-                <div className="w-16 h-16 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <Icon name="Headphones" size={28} className="text-accent" />
-                </div>
-                <h4 className="font-bold text-primary mb-2">Поддержка 24/7</h4>
-                <p className="text-sm text-muted-foreground">Консультации по подбору и техническим характеристикам</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contacts" className="py-16 bg-white">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-12">
-            <h3 className="text-3xl font-bold text-primary mb-3">Контакты</h3>
-            <p className="text-muted-foreground">Свяжитесь с нами любым удобным способом</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <Card className="border-border mb-6">
-                <CardContent className="p-6">
-                  <div className="space-y-6">
-                    <div className="flex items-start gap-4">
-                      <Icon name="MapPin" size={24} className="text-accent mt-1" />
-                      <div>
-                        <h4 className="font-bold text-primary mb-1">Адрес офиса</h4>
-                        <p className="text-muted-foreground">г. Москва, ул. Автозаводская, д. 15, офис 301</p>
-                      </div>
-                    </div>
-                    <Separator />
-                    <div className="flex items-start gap-4">
-                      <Icon name="Phone" size={24} className="text-accent mt-1" />
-                      <div>
-                        <h4 className="font-bold text-primary mb-1">Телефон</h4>
-                        <p className="text-muted-foreground">+7 (495) 123-45-67</p>
-                        <p className="text-muted-foreground">+7 (495) 123-45-68</p>
-                      </div>
-                    </div>
-                    <Separator />
-                    <div className="flex items-start gap-4">
-                      <Icon name="Mail" size={24} className="text-accent mt-1" />
-                      <div>
-                        <h4 className="font-bold text-primary mb-1">Email</h4>
-                        <p className="text-muted-foreground">info@autoparts-pro.ru</p>
-                        <p className="text-muted-foreground">sales@autoparts-pro.ru</p>
-                      </div>
-                    </div>
-                    <Separator />
-                    <div className="flex items-start gap-4">
-                      <Icon name="Clock" size={24} className="text-accent mt-1" />
-                      <div>
-                        <h4 className="font-bold text-primary mb-1">График работы</h4>
-                        <p className="text-muted-foreground">Пн-Пт: 9:00 - 19:00</p>
-                        <p className="text-muted-foreground">Сб: 10:00 - 16:00</p>
-                        <p className="text-muted-foreground">Вс: выходной</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div>
+          <div className="max-w-3xl mx-auto">
+            <h3 className="text-2xl font-bold text-primary mb-6 text-center">
+              Какой антифриз нужен для BMW?
+            </h3>
+            <div className="grid md:grid-cols-2 gap-6">
               <Card className="border-border">
                 <CardHeader>
-                  <CardTitle>Обратная связь</CardTitle>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Icon name="Droplet" className="text-green-600" />
+                    G11 (зелёный)
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <form className="space-y-4">
-                    <div>
-                      <Label htmlFor="name">Ваше имя</Label>
-                      <Input id="name" placeholder="Иван Иванов" className="mt-1" />
-                    </div>
-                    <div>
-                      <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="example@mail.ru" className="mt-1" />
-                    </div>
-                    <div>
-                      <Label htmlFor="phone">Телефон</Label>
-                      <Input id="phone" type="tel" placeholder="+7 (___) ___-__-__" className="mt-1" />
-                    </div>
-                    <div>
-                      <Label htmlFor="message">Сообщение</Label>
-                      <textarea
-                        id="message"
-                        rows={4}
-                        className="w-full mt-1 px-3 py-2 border border-input rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
-                        placeholder="Опишите ваш вопрос..."
-                      />
-                    </div>
-                    <Button type="submit" className="w-full bg-accent hover:bg-accent/90">
-                      <Icon name="Send" size={18} className="mr-2" />
-                      Отправить сообщение
-                    </Button>
-                  </form>
+                <CardContent className="text-sm text-muted-foreground">
+                  Для BMW до 1996 года. Силикатная основа, защита до -40°C. 
+                  Срок службы 2-3 года.
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Icon name="Droplet" className="text-red-600" />
+                    G12+ (красный)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">
+                  Для BMW 1997-2008. Карбоксилатная основа, улучшенная защита. 
+                  Срок службы до 5 лет.
+                </CardContent>
+              </Card>
+
+              <Card className="border-border">
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Icon name="Droplet" className="text-blue-600" />
+                    G12++ (синий)
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">
+                  Для BMW с 2008 года. Лобридная технология, максимальная защита. 
+                  Срок службы до 10 лет.
+                </CardContent>
+              </Card>
+
+              <Card className="border-border bg-accent/5">
+                <CardHeader>
+                  <CardTitle className="text-base flex items-center gap-2">
+                    <Icon name="AlertCircle" className="text-accent" />
+                    Важно помнить
+                  </CardTitle>
+                </CardHeader>
+                <CardContent className="text-sm text-muted-foreground">
+                  Нельзя смешивать разные типы антифриза! 
+                  При замене промывайте систему дистиллированной водой.
                 </CardContent>
               </Card>
             </div>
@@ -323,23 +217,9 @@ const Index = () => {
         </div>
       </section>
 
-      <footer className="bg-primary text-primary-foreground py-8">
-        <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <div className="flex items-center gap-2">
-              <Icon name="Wrench" size={24} />
-              <span className="font-bold text-lg">AutoParts Pro</span>
-            </div>
-            <p className="text-sm opacity-90">© 2026 AutoParts Pro. Все права защищены.</p>
-            <div className="flex gap-4">
-              <a href="#" className="hover:opacity-80 transition-opacity">
-                <Icon name="Mail" size={20} />
-              </a>
-              <a href="#" className="hover:opacity-80 transition-opacity">
-                <Icon name="Phone" size={20} />
-              </a>
-            </div>
-          </div>
+      <footer className="bg-primary text-primary-foreground py-6">
+        <div className="container mx-auto px-6 text-center">
+          <p className="text-sm opacity-90">© 2026 Антифриз для BMW. Профессиональный подбор охлаждающих жидкостей.</p>
         </div>
       </footer>
     </div>
